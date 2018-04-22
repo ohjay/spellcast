@@ -34,7 +34,7 @@ $(function() {
     var acceleration = evt.acceleration; // contains accel.x, accel.y, accel.z (m/s^2)
     if (acceleration.x == null) {
       logInfo('Acceleration is invalid.');
-      logInfo('Falling back to acceleration including gravity: ' + JSON.stringify(evt.accelerationIncludingGravity, null, 4);
+      logInfo('Falling back to acceleration including gravity: ' + JSON.stringify(evt.accelerationIncludingGravity, null, 4));
       acceleration = evt.accelerationIncludingGravity;
       acceleration.z -= 9.81;
     }
