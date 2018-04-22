@@ -32,7 +32,7 @@ $(function() {
     var rotationRate = evt.rotationRate; // rotation rate around each axis (deg/s)
     var interval = evt.interval; // ms time interval at which data is obtained from device
     // Send over socket
-    socket.emit('acceleration', acceleration.x);
+    socket.emit('acceleration', acceleration);
   }
 
   document.getElementById('wand').onclick = function() {
@@ -40,12 +40,12 @@ $(function() {
     if (window.DeviceOrientationEvent) {
       window.addEventListener('deviceorientation', handleOrientation, false);
     } else {
-      log('Error: device orientation not supported!');
+      document.getElementById('error').textContent += 'Error: device orientation not supported!';
     }
     if (window.DeviceMotionEvent) {
       window.addEventListener('devicemotion', handleMotion, true);
     } else {
-      log('Error: device motion not supported!');
+      document.getElementById('error').textContent += 'Error: device motion not supported!';
     }
     isWand = true;
   };
@@ -64,8 +64,8 @@ $(function() {
     }(keys[i]);
   }
   socket.on('acceleration', function(v) {
-    document.getElementById('paccelx').textContent = 'acceleration x: ' + v.toString();
-    // document.getElementById('paccely').textContent = 'acceleration y: ' + v.y.toString();
-    // document.getElementById('paccelz').textContent = 'acceleration z: ' + v.z.toString();
+    document.getElementById('paccelx').textContent = 'acceleration x: ' + v.x.toString();
+    document.getElementById('paccely').textContent = 'acceleration y: ' + v.y.toString();
+    document.getElementById('paccelz').textContent = 'acceleration z: ' + v.z.toString();
   });
 });
