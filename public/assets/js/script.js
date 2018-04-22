@@ -57,9 +57,10 @@ $(function() {
   var keys = ['absolute', 'alpha', 'beta', 'gamma', 'acceleration'];
   var numKeys = keys.length;
   for (var i = 0; i < numKeys; ++i) {
-    var k = keys[i];
-    socket.on(k, function(v) {
-      document.getElementById('p').textContent += k + ': ' + v.toString() + '\n';
-    });
+    !function(k) {
+      socket.on(k, function(v) {
+        document.getElementById('p').textContent += k + ': ' + v.toString() + '\n';
+      });
+    }(keys[i]);
   }
 });

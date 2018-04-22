@@ -19,10 +19,11 @@ io.on('connection', function(socket) {
     var keys = ['absolute', 'alpha', 'beta', 'gamma', 'acceleration'];
     var numKeys = keys.length;
     for (var i = 0; i < numKeys; ++i) {
-      var k = keys[i];
-      socket.on(k, function(msg) {
-        socket.broadcast.to(room).emit(k, msg);
-      });
+      !function(k) {
+        socket.on(k, function(msg) {
+          socket.broadcast.to(room).emit(k, msg);
+        });
+      }(keys[i]);
     }
   })
 });
