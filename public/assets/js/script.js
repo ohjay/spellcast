@@ -29,6 +29,10 @@ $(function() {
 
   function handleMotion(evt) {
     var acceleration = evt.acceleration; // contains accel.x, accel.y, accel.z (m/s^2)
+    if (acceleration.x == null) {
+      acceleration = evt.accelerationIncludingGravity;
+      acceleration.z -= 9.81;
+    }
     var rotationRate = evt.rotationRate; // rotation rate around each axis (deg/s)
     var interval = evt.interval; // ms time interval at which data is obtained from device
     // Send over socket
@@ -44,7 +48,7 @@ $(function() {
       document.getElementById('info').textContent += 'Error: device orientation not supported! ';
     }
     if (window.DeviceMotionEvent) {
-      window.addEventListener('devicemotion', handleMotion, true);
+      window.addEventListener('devicemotion', handleMotion);
       document.getElementById('info').textContent += 'Device motion supported! ';
     } else {
       document.getElementById('info').textContent += 'Error: device motion not supported! ';
