@@ -18,19 +18,19 @@ $(function() {
    */
 
   function handleOrientation(evt) {
-    var absolute = evt.absolute;
     var alpha = evt.alpha;
     var beta = evt.beta;
     var gamma = evt.gamma;
     // Send over socket
-    socket.emit('absolute', absolute);
     socket.emit('alpha', alpha);
     socket.emit('beta', beta);
     socket.emit('gamma', gamma);
   }
 
   function handleMotion(evt) {
-    var acceleration = evt.acceleration;
+    var acceleration = evt.acceleration; // contains accel.x, accel.y, accel.z (m/s^2)
+    var rotationRate = evt.rotationRate; // rotation rate around each axis (deg/s)
+    var interval = evt.interval; // ms time interval at which data is obtained from device
     // Send over socket
     socket.emit('acceleration', acceleration);
   }
@@ -54,13 +54,18 @@ $(function() {
    * RECEIVER
    */
 
-  var keys = ['absolute', 'alpha', 'beta', 'gamma', 'acceleration'];
+  var keys = ['alpha', 'beta', 'gamma'];
   var numKeys = keys.length;
   for (var i = 0; i < numKeys; ++i) {
     !function(k) {
       socket.on(k, function(v) {
-        document.getElementById('p').textContent += k + ': ' + v.toString() + '\n';
+        document.getElementById('p' + k).textContent = k + ': ' + v.toString();
       });
     }(keys[i]);
   }
+  socket.on('acceleration', function(v) {
+    document.getElementById('paccelx').textContent = 'acceleration x: ' + v.x.toString();
+    document.getElementById('paccely').textContent = 'acceleration y: ' + v.y.toString();
+    document.getElementById('paccelz').textContent = 'acceleration z: ' + v.z.toString();
+  });
 });
