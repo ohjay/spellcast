@@ -16,8 +16,13 @@ const io = socketIO(server);
 io.on('connection', function(socket) {
   socket.on('join', function(room) {
     socket.join(room);
-    socket.on('image', function(msg) {
-      socket.broadcast.to(room).emit('image', msg);
-    });
+    var keys = ['absolute', 'alpha', 'beta', 'gamma', 'acceleration'];
+    var numKeys = keys.length;
+    for (var i = 0; i < numKeys; ++i) {
+      var k = keys[i];
+      socket.on(k, function(msg) {
+        socket.broadcast.to(room).emit(k, msg);
+      });
+    }
   })
 });
