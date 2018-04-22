@@ -1,0 +1,23 @@
+{
+  "name": "spellcast",
+  "version": "1.0.0",
+  "description": "cross-device spellcasting demo",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "main": "app.js",
+  "keywords": [
+    "harry",
+    "potter",
+    "mobile",
+    "crossdevice",
+    "spell",
+    "wand"
+  ],
+  "author": "ohjay",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "socket.io": "^1.3.2"
+  }
+}
