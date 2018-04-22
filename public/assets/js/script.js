@@ -1,5 +1,8 @@
-// This is temporary
 var isWand = true;
+
+function logInfo(msg) {
+  document.getElementById('info').textContent += msg + ' ';
+}
 
 $(function() {
   // Connect to the socket
@@ -30,7 +33,9 @@ $(function() {
   function handleMotion(evt) {
     var acceleration = evt.acceleration; // contains accel.x, accel.y, accel.z (m/s^2)
     if (acceleration.x == null) {
+      logInfo('Acceleration is invalid: ' + acceleration.toString());
       acceleration = evt.accelerationIncludingGravity;
+      logInfo('Trying acceleration including gravity: ' + evt.accelerationIncludingGravity.toString());
       acceleration.z -= 9.81;
     }
     var rotationRate = evt.rotationRate; // rotation rate around each axis (deg/s)
@@ -43,15 +48,15 @@ $(function() {
     // Listen to orientation and motion events
     if (window.DeviceOrientationEvent) {
       window.addEventListener('deviceorientation', handleOrientation, false);
-      document.getElementById('info').textContent += 'Device orientation supported! ';
+      logInfo('Device orientation supported!');
     } else {
-      document.getElementById('info').textContent += 'Error: device orientation not supported! ';
+      logInfo('Error: device orientation not supported!');
     }
     if (window.DeviceMotionEvent) {
       window.addEventListener('devicemotion', handleMotion);
-      document.getElementById('info').textContent += 'Device motion supported! ';
+      logInfo('Device motion supported!');
     } else {
-      document.getElementById('info').textContent += 'Error: device motion not supported! ';
+      logInfo('Error: device motion not supported!');
     }
     isWand = true;
   };
