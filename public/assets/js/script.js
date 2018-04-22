@@ -32,7 +32,7 @@ $(function() {
     var rotationRate = evt.rotationRate; // rotation rate around each axis (deg/s)
     var interval = evt.interval; // ms time interval at which data is obtained from device
     // Send over socket
-    socket.emit('acceleration', acceleration);
+    socket.emit('acceleration', acceleration.x);
   }
 
   document.getElementById('wand').onclick = function() {
@@ -64,8 +64,8 @@ $(function() {
     }(keys[i]);
   }
   socket.on('acceleration', function(v) {
-    document.getElementById('paccelx').textContent = 'acceleration x: ' + v.x.toString();
-    document.getElementById('paccely').textContent = 'acceleration y: ' + v.y.toString();
-    document.getElementById('paccelz').textContent = 'acceleration z: ' + v.z.toString();
+    document.getElementById('paccelx').textContent = 'acceleration x: ' + v.toString();
+    // document.getElementById('paccely').textContent = 'acceleration y: ' + v.y.toString();
+    // document.getElementById('paccelz').textContent = 'acceleration z: ' + v.z.toString();
   });
 });
