@@ -39,13 +39,15 @@ $(function() {
     // Listen to orientation and motion events
     if (window.DeviceOrientationEvent) {
       window.addEventListener('deviceorientation', handleOrientation, false);
+      document.getElementById('info').textContent += 'Device orientation supported! ';
     } else {
-      document.getElementById('error').textContent += 'Error: device orientation not supported!';
+      document.getElementById('info').textContent += 'Error: device orientation not supported! ';
     }
     if (window.DeviceMotionEvent) {
       window.addEventListener('devicemotion', handleMotion, true);
+      document.getElementById('info').textContent += 'Device motion supported! ';
     } else {
-      document.getElementById('error').textContent += 'Error: device motion not supported!';
+      document.getElementById('info').textContent += 'Error: device motion not supported! ';
     }
     isWand = true;
   };
