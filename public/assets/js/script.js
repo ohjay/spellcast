@@ -1,5 +1,3 @@
-import * as BABYLON from 'babylonjs';
-
 function logInfo(msg) {
   document.getElementById('info').textContent += msg + ' ';
 }
