@@ -33,9 +33,9 @@ $(function() {
   function handleMotion(evt) {
     var acceleration = evt.acceleration; // contains accel.x, accel.y, accel.z (m/s^2)
     if (acceleration.x == null) {
-      logInfo('Acceleration is invalid: ' + acceleration.toString());
+      logInfo('Acceleration is invalid.');
+      logInfo('Falling back to acceleration including gravity: ' + JSON.stringify(evt.accelerationIncludingGravity, null, 4);
       acceleration = evt.accelerationIncludingGravity;
-      logInfo('Trying acceleration including gravity: ' + evt.accelerationIncludingGravity.toString());
       acceleration.z -= 9.81;
     }
     var rotationRate = evt.rotationRate; // rotation rate around each axis (deg/s)
