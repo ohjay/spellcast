@@ -19,5 +19,6 @@ his/her wand moving around, along with the effect of the spell that he/she casts
 
 ## Notes
 - You cannot move your feet in-world.
-- I don't intend to put much work into the scene, but if I were an artist
-  and/or knew some modeling artists with free time, it could obviously look a lot better.
+- I don't intend to put much work into the scene,
+  meaning it could be greatly improved by the careful touch of a 3D artist.
+  To my regret, the label of "artist" cannot in general be applied to me.

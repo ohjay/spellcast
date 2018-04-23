@@ -156,7 +156,7 @@ $(function() {
     document.getElementById('pbeta').textContent = 'beta: ' + beta.toString();
     beta = toRadians(beta);
     if (wand != null) {
-      wand.rotate(BABYLON.Axis.X, beta - prevBeta, BABYLON.Space.WORLD);
+      wand.rotate(BABYLON.Axis.X, prevBeta - beta, BABYLON.Space.WORLD);
     }
     prevBeta = beta;
   });
@@ -164,7 +164,7 @@ $(function() {
     document.getElementById('pgamma').textContent = 'gamma: ' + gamma.toString();
     gamma = toRadians(gamma);
     if (wand != null) {
-      wand.rotate(BABYLON.Axis.Z, prevGamma - gamma, BABYLON.Space.WORLD);
+      wand.rotate(BABYLON.Axis.Z, gamma - prevGamma, BABYLON.Space.WORLD);
     }
     prevGamma = gamma;
   });
