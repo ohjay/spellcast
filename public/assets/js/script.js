@@ -149,7 +149,7 @@ $(function() {
     alpha = toRadians(alpha);
     if (wand != null) {
       // wand.rotate(BABYLON.Axis.Y, prevAlpha - alpha, BABYLON.Space.WORLD);
-      wand.rotation.y = alpha;
+      wand.rotation.y = -alpha;
     }
     prevAlpha = alpha;
   });
