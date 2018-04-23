@@ -13,6 +13,10 @@ his/her wand moving around, along with the effect of the spell that he/she casts
 - Lumos
 - Nox
 
+## Technologies
+- WebSockets
+- Babylon.js
+
 ## Notes
 - You cannot move your feet in-world.
 - I don't intend to put much work into the scene, but if I were an artist

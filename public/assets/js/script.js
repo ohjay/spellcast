@@ -148,7 +148,7 @@ $(function() {
     document.getElementById('palpha').textContent = 'alpha: ' + alpha.toString();
     alpha = toRadians(alpha);
     if (wand != null) {
-      wand.rotate(BABYLON.Axis.Y, alpha - prevAlpha, BABYLON.Space.WORLD);
+      wand.rotate(BABYLON.Axis.Y, prevAlpha - alpha, BABYLON.Space.WORLD);
     }
     prevAlpha = alpha;
   });
