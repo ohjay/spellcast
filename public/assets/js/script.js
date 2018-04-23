@@ -64,6 +64,7 @@ function loadScene() {
       wand = newMeshes[0];
       wand.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
       wand.rotation = new BABYLON.Vector3(1, 0, 0); // point the wand upward
+      prevAlpha = 1.0;
       wand.setAbsolutePosition(new BABYLON.Vector3(1, 4, -8))
     });
 
@@ -141,7 +142,8 @@ $(function() {
     document.getElementById('palpha').textContent = 'alpha: ' + alpha.toString();
     alpha = toRadians(alpha);
     if (wand != null) {
-      wand.rotation.x = 1.0 + alpha;
+      wand.rotate(BABYLON.Axis.Y, prevAlpha - alpha, BABYLON.Space.WORLD);
+      // wand.rotation.x = 1.0 + alpha;
     }
     prevAlpha = alpha;
   });
@@ -149,7 +151,8 @@ $(function() {
     document.getElementById('pbeta').textContent = 'beta: ' + beta.toString();
     beta = toRadians(beta);
     if (wand != null) {
-      wand.rotation.y = beta;
+      wand.rotate(BABYLON.Axis.X, prevBeta - beta, BABYLON.Space.WORLD);
+      // wand.rotation.y = beta;
     }
     prevBeta = beta;
   });
@@ -157,7 +160,8 @@ $(function() {
     document.getElementById('pgamma').textContent = 'gamma: ' + gamma.toString();
     gamma = toRadians(gamma);
     if (wand != null) {
-      wand.rotation.z = gamma;
+      wand.rotate(BABYLON.Axis.Z, prevGamma - gamma, BABYLON.Space.WORLD);
+      // wand.rotation.z = gamma;
     }
     prevGamma = gamma;
   });
