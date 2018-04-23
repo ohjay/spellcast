@@ -34,22 +34,37 @@ function loadScene() {
     // Attach the camera to the canvas.
     camera.attachControl(canvas, false);
 
-    // Create a basic light, aiming at 0, 1, 0 - meaning, to the sky.
-    let light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
+    // Create a basic light.
+    let light = new BABYLON.PointLight('pointLight', new BABYLON.Vector3(0, 10, 0), scene);
 
     // Create a built-in "sphere" shape.
     let sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {segments: 16, diameter: 1}, scene);
+    let sphereMaterial = new BABYLON.StandardMaterial('sphereMaterial', scene);
+    sphereMaterial.diffuseColor  = new BABYLON.Color3(1.0, 0.7, 0.0);
+    sphereMaterial.ambientColor  = new BABYLON.Color3(1.0, 0.7, 0.0);
+    sphere.material = sphereMaterial;
 
     // Move the sphere upward 1/2 of its height.
     sphere.position.y = 1;
 
     // Create a built-in "ground" shape.
-    let ground = BABYLON.MeshBuilder.CreateGround('ground1', {height: 6, width: 6, subdivisions: 2}, scene);
+    let ground = BABYLON.MeshBuilder.CreateGround('ground', {height: 6, width: 6, subdivisions: 2}, scene);
+    let groundMaterial = new BABYLON.StandardMaterial('groundMaterial', scene);
+    groundMaterial.diffuseColor  = new BABYLON.Color3(0.82, 0.82, 0.82);
+    groundMaterial.ambientColor  = new BABYLON.Color3(0.82, 0.82, 0.82);
+    ground.material = groundMaterial;
+
+    // Shadows.
+    let shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
+    shadowGenerator.getShadowMap().renderList.push(sphere);
+    ground.receiveShadows = true;
 
     // Add wand.
-    BABYLON.SceneLoader.ImportMesh('Cylinder', "assets/scene/newtwand/", "newtwand.obj", scene, function(newMeshes) {
+    BABYLON.SceneLoader.ImportMesh('Cylinder', 'assets/scene/newtwand/', 'newtwand.obj', scene, function(newMeshes) {
       wand = newMeshes[0];
-      wand.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+      wand.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
+      wand.rotation = new BABYLON.Vector3(1, 0, 0); // point the wand upward
+      wand.setAbsolutePosition(new BABYLON.Vector3(1, 4, -8))
     });
 
     // Return the created scene.
@@ -126,7 +141,7 @@ $(function() {
     document.getElementById('palpha').textContent = 'alpha: ' + alpha.toString();
     alpha = toRadians(alpha);
     if (wand != null) {
-      wand.rotation.x = alpha;
+      wand.rotation.x = 1.0 + alpha;
     }
     prevAlpha = alpha;
   });
