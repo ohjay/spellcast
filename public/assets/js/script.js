@@ -1,8 +1,23 @@
+/*
+ * GLOBAL STATE
+ * --------------------
+ */
+
+let wand = null;
+let prevAlpha = 0;
+let prevBeta  = 0;
+let prevGamma = 0;
+
+// --------------------
+
 function logInfo(msg) {
   document.getElementById('info').textContent += msg + ' ';
 }
 
-let wand = null;
+function toRadians(angle) {
+  return angle * (Math.PI / 180);
+}
+
 function loadScene() {
   let canvas = document.getElementById('renderCanvas');
   let engine = new BABYLON.Engine(canvas, true);
@@ -23,7 +38,7 @@ function loadScene() {
     let light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
 
     // Create a built-in "sphere" shape.
-    let sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {segments: 16, diameter: 2}, scene);
+    let sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {segments: 16, diameter: 1}, scene);
 
     // Move the sphere upward 1/2 of its height.
     sphere.position.y = 1;
@@ -32,8 +47,9 @@ function loadScene() {
     let ground = BABYLON.MeshBuilder.CreateGround('ground1', {height: 6, width: 6, subdivisions: 2}, scene);
 
     // Add wand.
-    BABYLON.SceneLoader.ImportMesh('wand_root', "assets/scene/", "wand.babylon", scene, function(newMeshes) {
+    BABYLON.SceneLoader.ImportMesh('Cylinder', "assets/scene/newtwand/", "newtwand.obj", scene, function(newMeshes) {
       wand = newMeshes[0];
+      wand.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
     });
 
     // Return the created scene.
@@ -47,6 +63,8 @@ function loadScene() {
     engine.resize();
   });
 }
+
+// --------------------
 
 $(function() {
   // Connect to the socket
@@ -106,26 +124,38 @@ $(function() {
 
   socket.on('alpha', function(alpha) {
     document.getElementById('palpha').textContent = 'alpha: ' + alpha.toString();
+    alpha = toRadians(alpha);
     if (wand != null) {
-      wand.rotation.x = alpha;
+      wand.rotation.x = alpha - prevAlpha;
     }
+    prevAlpha = alpha;
   });
   socket.on('beta', function(beta) {
     document.getElementById('pbeta').textContent = 'beta: ' + beta.toString();
+    beta = toRadians(beta);
     if (wand != null) {
-      wand.rotation.y = beta;
+      wand.rotation.y = beta - prevBeta;
     }
+    prevBeta = beta;
   });
   socket.on('gamma', function(gamma) {
     document.getElementById('pgamma').textContent = 'gamma: ' + gamma.toString();
+    gamma = toRadians(gamma);
     if (wand != null) {
-      wand.rotation.z = gamma;
+      wand.rotation.z = gamma - prevGamma;
     }
+    prevGamma = gamma;
   });
   socket.on('acceleration', function(acceleration) {
-    document.getElementById('paccelx').textContent = 'acceleration x: ' + acceleration.x.toString();
-    document.getElementById('paccely').textContent = 'acceleration y: ' + acceleration.y.toString();
-    document.getElementById('paccelz').textContent = 'acceleration z: ' + acceleration.z.toString();
+    if (acceleration.x != null) {
+      document.getElementById('paccelx').textContent = 'acceleration x: ' + acceleration.x.toString();
+    }
+    if (acceleration.y != null) {
+      document.getElementById('paccely').textContent = 'acceleration y: ' + acceleration.y.toString();
+    }
+    if (acceleration.z != null) {
+      document.getElementById('paccelz').textContent = 'acceleration z: ' + acceleration.z.toString();
+    }
   });
 
   document.getElementById('scene').onclick = function() {
