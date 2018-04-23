@@ -4,6 +4,7 @@
  */
 
 let wand = null;
+let wandRoot = null;
 let prevAlpha = 0;
 let prevBeta  = 0;
 let prevGamma = 0;
@@ -25,7 +26,7 @@ function loadScene() {
     // Create a basic BJS Scene object.
     let scene = new BABYLON.Scene(engine);
 
-    // Create a FreeCamera, and set its position to (x: 0, y: 5, z: -10).
+    // Create a FreeCamera and set its position.
     let camera = new BABYLON.FreeCamera('camera', new BABYLON.Vector3(0, 5, -10), scene);
 
     // Target the camera to scene origin.
@@ -34,7 +35,7 @@ function loadScene() {
     // Attach the camera to the canvas.
     camera.attachControl(canvas, false);
 
-    // Create a basic light.
+    // Create a light.
     let light = new BABYLON.PointLight('pointLight', new BABYLON.Vector3(0, 10, 0), scene);
 
     // Create a built-in "sphere" shape.
@@ -62,10 +63,15 @@ function loadScene() {
     // Add wand.
     BABYLON.SceneLoader.ImportMesh('Cylinder', 'assets/scene/newtwand/', 'newtwand.obj', scene, function(newMeshes) {
       wand = newMeshes[0];
+      wandRoot = new BABYLON.Mesh('wandRoot', scene);
+      wand.parent = wandRoot;
+
       wand.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
-      wand.rotation = new BABYLON.Vector3(1, 0, 0); // point the wand upward
+      wand.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0); // point the wand upward
       prevAlpha = 1.0;
-      wand.setAbsolutePosition(new BABYLON.Vector3(1, 4, -8))
+      wandRoot.position.y = 0.7;
+      wand.setPivotPoint(new BABYLON.Vector3(0, 0, 0), BABYLON.Space.WORLD);
+      wand.setAbsolutePosition(new BABYLON.Vector3(1, 4, -8));
     });
 
     // Return the created scene.
@@ -142,8 +148,7 @@ $(function() {
     document.getElementById('palpha').textContent = 'alpha: ' + alpha.toString();
     alpha = toRadians(alpha);
     if (wand != null) {
-      wand.rotate(BABYLON.Axis.Y, prevAlpha - alpha, BABYLON.Space.WORLD);
-      // wand.rotation.x = 1.0 + alpha;
+      wand.rotate(BABYLON.Axis.Y, alpha - prevAlpha, BABYLON.Space.WORLD);
     }
     prevAlpha = alpha;
   });
@@ -151,8 +156,7 @@ $(function() {
     document.getElementById('pbeta').textContent = 'beta: ' + beta.toString();
     beta = toRadians(beta);
     if (wand != null) {
-      wand.rotate(BABYLON.Axis.X, prevBeta - beta, BABYLON.Space.WORLD);
-      // wand.rotation.y = beta;
+      wand.rotate(BABYLON.Axis.X, beta - prevBeta, BABYLON.Space.WORLD);
     }
     prevBeta = beta;
   });
@@ -161,7 +165,6 @@ $(function() {
     gamma = toRadians(gamma);
     if (wand != null) {
       wand.rotate(BABYLON.Axis.Z, prevGamma - gamma, BABYLON.Space.WORLD);
-      // wand.rotation.z = gamma;
     }
     prevGamma = gamma;
   });

@@ -2,11 +2,11 @@
 > You're a wizard, Harry.
 
 This is a virtual spellcasting demo in which you take control of your "wand"
-(i.e. your phone) and cast spell(s). It was created as a final project for
+(i.e. your smartphone) and cast spell(s). It was created as a final project for
 the Harry Potter DeCal at UC Berkeley. The idea is that the user would hold
-his/her smartphone in front of a computer while calling out an incantation and
-brandishing the phone "wand." On-screen the user would be able to see his/her
-wand moving around, along with the effect of the spell that he/she casts.
+his/her phone in front of a computer while calling out an incantation and
+brandishing the phone "wand." On-screen the user would then be able to see
+his/her wand moving around, along with the effect of the spell that he/she casts.
 
 ## Spell List
 - Wingardium Leviosa
