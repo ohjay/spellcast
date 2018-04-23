@@ -16,9 +16,9 @@ const io = socketIO(server);
 io.on('connection', function(socket) {
   socket.on('join', function(room) {
     socket.join(room);
-    var keys = ['alpha', 'beta', 'gamma', 'acceleration'];
-    var numKeys = keys.length;
-    for (var i = 0; i < numKeys; ++i) {
+    let keys = ['alpha', 'beta', 'gamma', 'acceleration'];
+    let numKeys = keys.length;
+    for (let i = 0; i < numKeys; ++i) {
       !function(k) {
         socket.on(k, function(msg) {
           socket.broadcast.to(room).emit(k, msg);

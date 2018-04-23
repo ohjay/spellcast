@@ -2,15 +2,16 @@ function logInfo(msg) {
   document.getElementById('info').textContent += msg + ' ';
 }
 
+let wand = null;
 function loadScene() {
-  var canvas = document.getElementById('renderCanvas');
-  var engine = new BABYLON.Engine(canvas, true);
-  var createScene = function() {
+  let canvas = document.getElementById('renderCanvas');
+  let engine = new BABYLON.Engine(canvas, true);
+  let createScene = function() {
     // Create a basic BJS Scene object.
-    var scene = new BABYLON.Scene(engine);
+    let scene = new BABYLON.Scene(engine);
 
     // Create a FreeCamera, and set its position to (x: 0, y: 5, z: -10).
-    var camera = new BABYLON.FreeCamera('camera', new BABYLON.Vector3(0, 5,-10), scene);
+    let camera = new BABYLON.FreeCamera('camera', new BABYLON.Vector3(0, 5, -10), scene);
 
     // Target the camera to scene origin.
     camera.setTarget(BABYLON.Vector3.Zero());
@@ -19,21 +20,26 @@ function loadScene() {
     camera.attachControl(canvas, false);
 
     // Create a basic light, aiming at 0, 1, 0 - meaning, to the sky.
-    var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), scene);
+    let light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
 
     // Create a built-in "sphere" shape.
-    var sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {segments: 16, diameter: 2}, scene);
+    let sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {segments: 16, diameter: 2}, scene);
 
     // Move the sphere upward 1/2 of its height.
     sphere.position.y = 1;
 
     // Create a built-in "ground" shape.
-    var ground = BABYLON.MeshBuilder.CreateGround('ground1', {height:6, width:6, subdivisions: 2}, scene);
+    let ground = BABYLON.MeshBuilder.CreateGround('ground1', {height: 6, width: 6, subdivisions: 2}, scene);
+
+    // Add wand.
+    BABYLON.SceneLoader.ImportMesh('wand_root', "assets/scene/", "wand.babylon", scene, function(newMeshes) {
+      wand = newMeshes[0];
+    });
 
     // Return the created scene.
     return scene;
-  }
-  var scene = createScene();
+  };
+  let scene = createScene();
   engine.runRenderLoop(function() {
     scene.render();
   });
@@ -44,14 +50,10 @@ function loadScene() {
 
 $(function() {
   // Connect to the socket
-  var socket = io();
-  
-  // Get DOM elements
-  var input = document.getElementById('input');
-  var output = document.getElementById('output');
+  let socket = io();
   
   // Join a channel
-  var room = 'test';
+  let room = 'test';
   socket.emit('join', room);
 
   /*
@@ -59,9 +61,9 @@ $(function() {
    */
 
   function handleOrientation(evt) {
-    var alpha = evt.alpha;
-    var beta = evt.beta;
-    var gamma = evt.gamma;
+    let alpha = evt.alpha;
+    let beta = evt.beta;
+    let gamma = evt.gamma;
     // Send over socket
     socket.emit('alpha', alpha);
     socket.emit('beta', beta);
@@ -69,15 +71,15 @@ $(function() {
   }
 
   function handleMotion(evt) {
-    var acceleration = evt.acceleration; // contains accel.x, accel.y, accel.z (m/s^2)
+    let acceleration = evt.acceleration; // contains accel.x, accel.y, accel.z (m/s^2)
     if (acceleration.x == null) {
       acceleration = evt.accelerationIncludingGravity;
       if (acceleration.z != null) {
         acceleration.z -= 9.81;
       }
     }
-    var rotationRate = evt.rotationRate; // rotation rate around each axis (deg/s)
-    var interval = evt.interval; // ms time interval at which data is obtained from device
+    let rotationRate = evt.rotationRate; // rotation rate around each axis (deg/s)
+    let interval = evt.interval; // ms time interval at which data is obtained from device
     // Send over socket
     socket.emit('acceleration', acceleration);
   }
@@ -102,19 +104,28 @@ $(function() {
    * RECEIVER
    */
 
-  var keys = ['alpha', 'beta', 'gamma'];
-  var numKeys = keys.length;
-  for (var i = 0; i < numKeys; ++i) {
-    !function(k) {
-      socket.on(k, function(v) {
-        document.getElementById('p' + k).textContent = k + ': ' + v.toString();
-      });
-    }(keys[i]);
-  }
-  socket.on('acceleration', function(v) {
-    document.getElementById('paccelx').textContent = 'acceleration x: ' + v.x.toString();
-    document.getElementById('paccely').textContent = 'acceleration y: ' + v.y.toString();
-    document.getElementById('paccelz').textContent = 'acceleration z: ' + v.z.toString();
+  socket.on('alpha', function(alpha) {
+    document.getElementById('palpha').textContent = 'alpha: ' + alpha.toString();
+    if (wand != null) {
+      wand.rotation.x = alpha;
+    }
+  });
+  socket.on('beta', function(beta) {
+    document.getElementById('pbeta').textContent = 'beta: ' + beta.toString();
+    if (wand != null) {
+      wand.rotation.y = beta;
+    }
+  });
+  socket.on('gamma', function(gamma) {
+    document.getElementById('pgamma').textContent = 'gamma: ' + gamma.toString();
+    if (wand != null) {
+      wand.rotation.z = gamma;
+    }
+  });
+  socket.on('acceleration', function(acceleration) {
+    document.getElementById('paccelx').textContent = 'acceleration x: ' + acceleration.x.toString();
+    document.getElementById('paccely').textContent = 'acceleration y: ' + acceleration.y.toString();
+    document.getElementById('paccelz').textContent = 'acceleration z: ' + acceleration.z.toString();
   });
 
   document.getElementById('scene').onclick = function() {
