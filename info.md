@@ -20,5 +20,5 @@ his/her wand moving around, along with the effect of the spell that he/she casts
 ## Notes
 - You cannot move your feet in-world.
 - I don't intend to put much work into the scene,
-  meaning it could be greatly improved by the careful touch of a 3D artist.
+  meaning it could be greatly improved by the careful touch of an artist.
   To my regret, the label of "artist" cannot in general be applied to me.
