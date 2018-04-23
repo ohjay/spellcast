@@ -126,7 +126,7 @@ $(function() {
     document.getElementById('palpha').textContent = 'alpha: ' + alpha.toString();
     alpha = toRadians(alpha);
     if (wand != null) {
-      wand.rotation.x = alpha - prevAlpha;
+      wand.rotation.x = alpha;
     }
     prevAlpha = alpha;
   });
@@ -134,7 +134,7 @@ $(function() {
     document.getElementById('pbeta').textContent = 'beta: ' + beta.toString();
     beta = toRadians(beta);
     if (wand != null) {
-      wand.rotation.y = beta - prevBeta;
+      wand.rotation.y = beta;
     }
     prevBeta = beta;
   });
@@ -142,7 +142,7 @@ $(function() {
     document.getElementById('pgamma').textContent = 'gamma: ' + gamma.toString();
     gamma = toRadians(gamma);
     if (wand != null) {
-      wand.rotation.z = gamma - prevGamma;
+      wand.rotation.z = gamma;
     }
     prevGamma = gamma;
   });
