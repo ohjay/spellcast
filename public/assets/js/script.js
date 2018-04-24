@@ -89,7 +89,8 @@ function loadScene() {
       let pos = lightSphere.getAbsolutePosition();
       lightSphere.parent = wand;
       lightSphere.setAbsolutePosition(pos);
-      wandLight = new BABYLON.PointLight('wandLight', new BABYLON.Vector3(0, 0, 0), scene);
+      wandLight = new BABYLON.SpotLight('wandLight', new BABYLON.Vector3(0, 0, 0),
+        new BABYLON.Vector3(0, 0, -Math.PI / 2), Math.PI / 4, 5, scene); // pos, dir, ang, exp
       wandLight.diffuse  = lightColor;
       wandLight.specular = lightColor;
       wandLight.parent   = lightSphere;
