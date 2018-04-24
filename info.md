@@ -16,6 +16,10 @@ his/her wand moving around, along with the effect of the spell that he/she casts
 ## Technologies
 - WebSockets
 - Babylon.js
+- JsSpeechRecognizer
+
+## Supported Browsers
+- Chrome
 
 ## Notes
 - You cannot move your feet in-world.
