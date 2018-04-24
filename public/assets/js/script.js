@@ -84,7 +84,7 @@ function loadScene() {
       prevAlpha = 1.0;
 
       // Add light at wand tip
-      let lightColor  = new BABYLON.Color3(1.0, 0.7, 0);
+      let lightColor = new BABYLON.Color3(1.0, 0.7, 0);
       lightSphere = BABYLON.MeshBuilder.CreateSphere('lightSphere', {diameter: 0.2}, scene);
       lightSphere.material = new BABYLON.StandardMaterial('LED', scene);
       lightSphere.material.emissiveColor = lightColor;
@@ -97,6 +97,8 @@ function loadScene() {
       wandLight.diffuse  = lightColor;
       wandLight.specular = lightColor;
       wandLight.parent   = lightSphere;
+      let hl = new BABYLON.HighlightLayer('hl', scene);
+      hl.addMesh(lightSphere, new BABYLON.Color3(1.0, 0.7, 0));
       wandLight.setEnabled(false);
       lightSphere.setEnabled(false);
 
@@ -200,7 +202,6 @@ $(function() {
    */
 
   socket.on('alpha', function(alpha) {
-    document.getElementById('palpha').textContent = 'alpha: ' + alpha.toString();
     alpha = toRadians(alpha);
     if (wand != null) {
       wand.rotation.y = targetRotY - (alpha - baseAlpha);
@@ -208,7 +209,6 @@ $(function() {
     prevAlpha = alpha;
   });
   socket.on('beta', function(beta) {
-    document.getElementById('pbeta').textContent = 'beta: ' + beta.toString();
     beta = toRadians(beta);
     if (wand != null) {
       wand.rotation.x = targetRotX - (beta - baseBeta);
@@ -216,7 +216,6 @@ $(function() {
     prevBeta = beta;
   });
   socket.on('gamma', function(gamma) {
-    document.getElementById('pgamma').textContent = 'gamma: ' + gamma.toString();
     gamma = toRadians(gamma);
     if (wand != null) {
       wand.rotation.z = targetRotZ + (gamma - baseGamma);
