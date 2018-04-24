@@ -16,7 +16,7 @@ const io = socketIO(server);
 io.on('connection', function(socket) {
   socket.on('join', function(room) {
     socket.join(room);
-    let keys = ['alpha', 'beta', 'gamma', 'acceleration'];
+    let keys = ['alpha', 'beta', 'gamma', 'acceleration', 'calibrate'];
     let numKeys = keys.length;
     for (let i = 0; i < numKeys; ++i) {
       !function(k) {

@@ -9,6 +9,14 @@ let prevAlpha = 0;
 let prevBeta  = 0;
 let prevGamma = 0;
 
+let baseAlpha = 0;
+let baseBeta  = 0;
+let baseGamma = 0;
+
+let targetRotX = 0;
+let targetRotY = 0;
+let targetRotZ = 0;
+
 // --------------------
 
 function logInfo(msg) {
@@ -72,6 +80,9 @@ function loadScene() {
       wandRoot.position.y = 0.7;
       wand.setPivotPoint(new BABYLON.Vector3(0, 0, 0), BABYLON.Space.WORLD);
       wand.setAbsolutePosition(new BABYLON.Vector3(1, 4, -8));
+
+      // Define target rotation
+      targetRotX = Math.PI;
     });
 
     // Return the created scene.
@@ -140,6 +151,11 @@ $(function() {
     }
   };
 
+  document.getElementById('calibrate').onclick = function() {
+    // Send calibration signal, so that the computer knows the phone is pointed at it
+    socket.emit('calibrate');
+  };
+
   /*
    * RECEIVER
    */
@@ -149,7 +165,7 @@ $(function() {
     alpha = toRadians(alpha);
     if (wand != null) {
       // wand.rotate(BABYLON.Axis.Y, prevAlpha - alpha, BABYLON.Space.WORLD);
-      wand.rotation.y = -alpha;
+      wand.rotation.y = targetRotY - (alpha - baseAlpha);
     }
     prevAlpha = alpha;
   });
@@ -158,7 +174,7 @@ $(function() {
     beta = toRadians(beta);
     if (wand != null) {
       // wand.rotate(BABYLON.Axis.X, prevBeta - beta, BABYLON.Space.WORLD);
-      wand.rotation.x = beta;
+      wand.rotation.x = targetRotX + (beta - baseBeta);
     }
     prevBeta = beta;
   });
@@ -167,7 +183,7 @@ $(function() {
     gamma = toRadians(gamma);
     if (wand != null) {
       // wand.rotate(BABYLON.Axis.Z, gamma - prevGamma, BABYLON.Space.WORLD);
-      wand.rotation.z = -gamma;
+      wand.rotation.z = targetRotZ - (gamma - baseGamma);
     }
     prevGamma = gamma;
   });
@@ -181,6 +197,12 @@ $(function() {
     if (acceleration.z != null) {
       document.getElementById('paccelz').textContent = 'acceleration z: ' + acceleration.z.toString();
     }
+  });
+  socket.on('calibrate', function() {
+    // The phone is currently pointed at the screen
+    baseAlpha = prevAlpha;
+    baseBeta  = prevBeta;
+    baseGamma = prevGamma;
   });
 
   document.getElementById('scene').onclick = function() {
