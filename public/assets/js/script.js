@@ -174,7 +174,7 @@ $(function() {
     beta = toRadians(beta);
     if (wand != null) {
       // wand.rotate(BABYLON.Axis.X, prevBeta - beta, BABYLON.Space.WORLD);
-      wand.rotation.x = targetRotX + (beta - baseBeta);
+      wand.rotation.x = targetRotX - (beta - baseBeta);
     }
     prevBeta = beta;
   });
@@ -183,7 +183,7 @@ $(function() {
     gamma = toRadians(gamma);
     if (wand != null) {
       // wand.rotate(BABYLON.Axis.Z, gamma - prevGamma, BABYLON.Space.WORLD);
-      wand.rotation.z = targetRotZ - (gamma - baseGamma);
+      wand.rotation.z = targetRotZ + (gamma - baseGamma);
     }
     prevGamma = gamma;
   });
