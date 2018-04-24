@@ -7,8 +7,12 @@ let wand        = null;
 let wandRoot    = null;
 let wandLight   = null;
 let lightSphere = null;
+let hl          = null;
+let sphere      = null;
 
-let lightOn = false;
+let lightOn   = false;
+let wlActive  = false;
+let wlBasePos = null;
 
 let prevAlpha = 0;
 let prevBeta  = 0;
@@ -21,6 +25,11 @@ let baseGamma = 0;
 let targetRotX = 0;
 let targetRotY = 0;
 let targetRotZ = 0;
+
+let vx = 0;
+let vy = 0;
+let vz = 0;
+let dt = 1; // s
 
 // --------------------
 
@@ -52,7 +61,7 @@ function loadScene() {
     let light = new BABYLON.PointLight('pointLight', new BABYLON.Vector3(0, 10, 0), scene);
 
     // Create a built-in "sphere" shape
-    let sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {segments: 16, diameter: 1}, scene);
+    sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {segments: 16, diameter: 1}, scene);
     let sphereMaterial = new BABYLON.StandardMaterial('sphereMaterial', scene);
     sphereMaterial.diffuseColor  = new BABYLON.Color3(1.0, 0.7, 0.0);
     sphereMaterial.ambientColor  = new BABYLON.Color3(1.0, 0.7, 0.0);
@@ -97,8 +106,8 @@ function loadScene() {
       wandLight.diffuse  = lightColor;
       wandLight.specular = lightColor;
       wandLight.parent   = lightSphere;
-      let hl = new BABYLON.HighlightLayer('hl', scene);
-      hl.addMesh(lightSphere, new BABYLON.Color3(1.0, 0.7, 0));
+      hl = new BABYLON.HighlightLayer('hl', scene);
+      hl.addMesh(lightSphere, lightColor);
       wandLight.setEnabled(false);
       lightSphere.setEnabled(false);
 
@@ -122,8 +131,34 @@ function loadScene() {
   });
 }
 
+function wingardiumLeviosa() {
+  if (!wlActive) {
+    // Highlight target object
+    hl.addMesh(sphere, BABYLON.Color3.Green());
+    wlBasePos = lightSphere.getAbsolutePosition();
+
+    // Update target position at interval
+    let updateId = setInterval(function() {
+      // Translate object according to difference in wand target
+      let currPos = lightSphere.getAbsolutePosition();
+      let delta   = currPos - wlBasePos;
+      sphere.translate(BABYLON.Axis.X, delta.x, BABYLON.Space.WORLD);
+      sphere.translate(BABYLON.Axis.Y, delta.y, BABYLON.Space.WORLD);
+      sphere.translate(BABYLON.Axis.Z, delta.z, BABYLON.Space.WORLD);
+    }, 100); // ms
+
+    // Set timeout for effect expiration
+    setTimeout(function() {
+      hl.removeMesh(sphere);
+      clearInterval(updateId);
+      wlActive = false;
+    }, 20000); // ms
+    wlActive = true;
+  }
+}
+
 function lumos() {
-  if (!lightOn) {
+  if (!lightOn && !wlActive) {
     lightSphere.setEnabled(true);
     wandLight.setEnabled(true);
     lightOn = true;
@@ -131,7 +166,7 @@ function lumos() {
 }
 
 function nox() {
-  if (lightOn) {
+  if (lightOn && !wlActive) {
     wandLight.setEnabled(false);
     lightSphere.setEnabled(false);
     lightOn = false;
@@ -173,6 +208,7 @@ $(function() {
     let rotationRate = evt.rotationRate; // rotation rate around each axis (deg/s)
     let interval = evt.interval; // ms time interval at which data is obtained from device
     // Send over socket
+    socket.emit('interval', interval);
     socket.emit('acceleration', acceleration);
   }
 
@@ -222,15 +258,38 @@ $(function() {
     }
     prevGamma = gamma;
   });
+  socket.on('interval', function(interval) {
+    // Log interval for use in numerical integration methods
+    dt = interval / 1000.0;
+  });
   socket.on('acceleration', function(acceleration) {
     if (acceleration.x != null) {
       document.getElementById('paccelx').textContent = 'acceleration x: ' + acceleration.x.toString();
+      if (wand != null) {
+        // Velocity Verlet
+        let vxH = vx + 0.5 * acceleration.x * dt;
+        let dx  = vxH * dt;
+        vx = vxH + 0.5 * acceleration.x * dt;
+        wand.translate(BABYLON.Axis.X, dx, BABYLON.Space.WORLD);
+      }
     }
     if (acceleration.y != null) {
       document.getElementById('paccely').textContent = 'acceleration y: ' + acceleration.y.toString();
+      if (wand != null) {
+        let vzH = vz + 0.5 * acceleration.y * dt;
+        let dz  = vzH * dt;
+        vz = vzH + 0.5 * acceleration.y * dt;
+        wand.translate(BABYLON.Axis.Z, dz, BABYLON.Space.WORLD);
+      }
     }
     if (acceleration.z != null) {
       document.getElementById('paccelz').textContent = 'acceleration z: ' + acceleration.z.toString();
+      if (wand != null) {
+        let vyH = vy + 0.5 * acceleration.z * dt;
+        let dy  = vyH * dt;
+        vy = vyH + 0.5 * acceleration.z * dt;
+        wand.translate(BABYLON.Axis.Y, dy, BABYLON.Space.WORLD);
+      }
     }
   });
   socket.on('calibrate', function() {
