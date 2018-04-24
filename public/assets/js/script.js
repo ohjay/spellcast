@@ -3,9 +3,12 @@
  * --------------------
  */
 
-let wand      = null;
-let wandRoot  = null;
-let wandLight = null;
+let wand        = null;
+let wandRoot    = null;
+let wandLight   = null;
+let lightSphere = null;
+
+let lightOn = false;
 
 let prevAlpha = 0;
 let prevBeta  = 0;
@@ -82,7 +85,7 @@ function loadScene() {
 
       // Add light at wand tip
       let lightColor  = new BABYLON.Color3(1.0, 0.7, 0);
-      let lightSphere = BABYLON.MeshBuilder.CreateSphere('lightSphere', {diameter: 0.2}, scene);
+      lightSphere = BABYLON.MeshBuilder.CreateSphere('lightSphere', {diameter: 0.2}, scene);
       lightSphere.material = new BABYLON.StandardMaterial('LED', scene);
       lightSphere.material.emissiveColor = lightColor;
       lightSphere.setPivotPoint(new BABYLON.Vector3(0, 0, 7.2), BABYLON.Space.WORLD);
@@ -94,6 +97,8 @@ function loadScene() {
       wandLight.diffuse  = lightColor;
       wandLight.specular = lightColor;
       wandLight.parent   = lightSphere;
+      wandLight.setEnabled(false);
+      lightSphere.setEnabled(false);
 
       wandRoot.position.y = 0.7;
       wand.setPivotPoint(new BABYLON.Vector3(0, 0, 0), BABYLON.Space.WORLD);
@@ -113,6 +118,22 @@ function loadScene() {
   window.addEventListener('resize', function() {
     engine.resize();
   });
+}
+
+function lumos() {
+  if (!lightOn) {
+    lightSphere.setEnabled(true);
+    wandLight.setEnabled(true);
+    lightOn = true;
+  }
+}
+
+function nox() {
+  if (lightOn) {
+    wandLight.setEnabled(false);
+    lightSphere.setEnabled(false);
+    lightOn = false;
+  }
 }
 
 // --------------------
@@ -182,7 +203,6 @@ $(function() {
     document.getElementById('palpha').textContent = 'alpha: ' + alpha.toString();
     alpha = toRadians(alpha);
     if (wand != null) {
-      // wand.rotate(BABYLON.Axis.Y, prevAlpha - alpha, BABYLON.Space.WORLD);
       wand.rotation.y = targetRotY - (alpha - baseAlpha);
     }
     prevAlpha = alpha;
@@ -191,7 +211,6 @@ $(function() {
     document.getElementById('pbeta').textContent = 'beta: ' + beta.toString();
     beta = toRadians(beta);
     if (wand != null) {
-      // wand.rotate(BABYLON.Axis.X, prevBeta - beta, BABYLON.Space.WORLD);
       wand.rotation.x = targetRotX - (beta - baseBeta);
     }
     prevBeta = beta;
@@ -200,7 +219,6 @@ $(function() {
     document.getElementById('pgamma').textContent = 'gamma: ' + gamma.toString();
     gamma = toRadians(gamma);
     if (wand != null) {
-      // wand.rotate(BABYLON.Axis.Z, gamma - prevGamma, BABYLON.Space.WORLD);
       wand.rotation.z = targetRotZ + (gamma - baseGamma);
     }
     prevGamma = gamma;
