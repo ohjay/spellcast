@@ -3,8 +3,10 @@
  * --------------------
  */
 
-let wand = null;
-let wandRoot = null;
+let wand      = null;
+let wandRoot  = null;
+let wandLight = null;
+
 let prevAlpha = 0;
 let prevBeta  = 0;
 let prevGamma = 0;
@@ -31,44 +33,44 @@ function loadScene() {
   let canvas = document.getElementById('renderCanvas');
   let engine = new BABYLON.Engine(canvas, true);
   let createScene = function() {
-    // Create a basic BJS Scene object.
+    // Create a basic BJS Scene object
     let scene = new BABYLON.Scene(engine);
 
-    // Create a FreeCamera and set its position.
+    // Create a FreeCamera and set its position
     let camera = new BABYLON.FreeCamera('camera', new BABYLON.Vector3(0, 5, -10), scene);
 
-    // Target the camera to scene origin.
+    // Target the camera to scene origin
     camera.setTarget(BABYLON.Vector3.Zero());
 
-    // Attach the camera to the canvas.
+    // Attach the camera to the canvas
     camera.attachControl(canvas, false);
 
-    // Create a light.
+    // Create a light
     let light = new BABYLON.PointLight('pointLight', new BABYLON.Vector3(0, 10, 0), scene);
 
-    // Create a built-in "sphere" shape.
+    // Create a built-in "sphere" shape
     let sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {segments: 16, diameter: 1}, scene);
     let sphereMaterial = new BABYLON.StandardMaterial('sphereMaterial', scene);
     sphereMaterial.diffuseColor  = new BABYLON.Color3(1.0, 0.7, 0.0);
     sphereMaterial.ambientColor  = new BABYLON.Color3(1.0, 0.7, 0.0);
     sphere.material = sphereMaterial;
 
-    // Move the sphere upward 1/2 of its height.
+    // Move the sphere upward 1/2 of its height
     sphere.position.y = 1;
 
-    // Create a built-in "ground" shape.
+    // Create a built-in "ground" shape
     let ground = BABYLON.MeshBuilder.CreateGround('ground', {height: 6, width: 6, subdivisions: 2}, scene);
     let groundMaterial = new BABYLON.StandardMaterial('groundMaterial', scene);
     groundMaterial.diffuseColor  = new BABYLON.Color3(0.82, 0.82, 0.82);
     groundMaterial.ambientColor  = new BABYLON.Color3(0.82, 0.82, 0.82);
     ground.material = groundMaterial;
 
-    // Shadows.
+    // Shadows
     let shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
     shadowGenerator.getShadowMap().renderList.push(sphere);
     ground.receiveShadows = true;
 
-    // Add wand.
+    // Add wand
     BABYLON.SceneLoader.ImportMesh('Cylinder', 'assets/scene/newtwand/', 'newtwand.obj', scene, function(newMeshes) {
       wand = newMeshes[0];
       wandRoot = new BABYLON.Mesh('wandRoot', scene);
@@ -77,6 +79,21 @@ function loadScene() {
       wand.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
       wand.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0); // point the wand upward
       prevAlpha = 1.0;
+
+      // Add light at wand tip
+      let lightColor  = new BABYLON.Color3(1.0, 0.7, 0);
+      let lightSphere = BABYLON.MeshBuilder.CreateSphere('lightSphere', {diameter: 0.2}, scene);
+      lightSphere.material = new BABYLON.StandardMaterial('LED', scene);
+      lightSphere.material.emissiveColor = lightColor;
+      lightSphere.setPivotPoint(new BABYLON.Vector3(0, 0, 7.2), BABYLON.Space.WORLD);
+      let pos = lightSphere.getAbsolutePosition();
+      lightSphere.parent = wand;
+      lightSphere.setAbsolutePosition(pos);
+      wandLight = new BABYLON.PointLight('wandLight', new BABYLON.Vector3(0, 0, 0), scene);
+      wandLight.diffuse  = lightColor;
+      wandLight.specular = lightColor;
+      wandLight.parent   = lightSphere;
+
       wandRoot.position.y = 0.7;
       wand.setPivotPoint(new BABYLON.Vector3(0, 0, 0), BABYLON.Space.WORLD);
       wand.setAbsolutePosition(new BABYLON.Vector3(1, 4, -8));
@@ -85,7 +102,7 @@ function loadScene() {
       targetRotX = Math.PI;
     });
 
-    // Return the created scene.
+    // Return the created scene
     return scene;
   };
   let scene = createScene();
