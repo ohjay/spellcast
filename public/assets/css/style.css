@@ -123,6 +123,10 @@ div.rect-button span {
   background: #004913;
 }
 
+.green:active {
+  background: #002b0b;
+}
+
 .centered {
   width: 256px;
   margin: 0 auto;
