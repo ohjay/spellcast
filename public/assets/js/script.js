@@ -32,7 +32,7 @@ var vy = 0;
 var vz = 0;
 var dt = 1; // s
 
-const _DIST_SCALE = 10;
+const _DIST_SCALE = 1e8;
 
 // --------------------
 
@@ -292,7 +292,7 @@ $(function() {
         let vxH = vx + 0.5 * acceleration.x * dt;
         let dx  = (vxH * dt) * _DIST_SCALE;
         vx = vxH + 0.5 * acceleration.x * dt;
-        document.getElementById('paccelx').textContent = 'translate x: ' + dx.toString();
+        document.getElementById('paccelx').textContent = 'translate x: ' + dx.toString() + ' (' + acceleration.x.toString() + ')';
         wand.translate(BABYLON.Axis.X, dx, BABYLON.Space.WORLD);
       }
     }
@@ -301,7 +301,7 @@ $(function() {
         let vzH = vz + 0.5 * acceleration.y * dt;
         let dz  = (vzH * dt) * _DIST_SCALE;
         vz = vzH + 0.5 * acceleration.y * dt;
-        document.getElementById('paccely').textContent = 'translate y: ' + dy.toString();
+        document.getElementById('paccely').textContent = 'translate z: ' + dz.toString() + ' (' + acceleration.y.toString() + ')';
         wand.translate(BABYLON.Axis.Z, dz, BABYLON.Space.WORLD);
       }
     }
@@ -310,7 +310,7 @@ $(function() {
         let vyH = vy + 0.5 * acceleration.z * dt;
         let dy  = (vyH * dt) * _DIST_SCALE;
         vy = vyH + 0.5 * acceleration.z * dt;
-        document.getElementById('paccelz').textContent = 'translate z: ' + dz.toString();
+        document.getElementById('paccelz').textContent = 'translate y: ' + dy.toString() + ' (' + acceleration.z.toString() + ')';
         wand.translate(BABYLON.Axis.Y, dy, BABYLON.Space.WORLD);
       }
     }
