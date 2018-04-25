@@ -188,6 +188,7 @@ function nox() {
 }
 
 function launch() {
+  $('#renderCanvas').css('display', 'inline');
   loadScene();
   speechRec = new JsSpeechRecognizer();
   speechRec.openMic();
@@ -203,7 +204,9 @@ $(function() {
   // Join a channel
   let room = uuidv4();
   let targetURL = 'https://spelkast.herokuapp.com/wand?room=' + room;
-  new QRCode(document.getElementById('qrcode'), targetURL);
+  new QRCode(document.getElementById('qrcode'), {
+    text: targetURL, width: 256, height: 256
+  });
   socket.emit('join', room);
 
   /*

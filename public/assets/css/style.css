@@ -3,14 +3,39 @@
   margin: 0;
 }
 
+h1 {
+  font-size: 3em;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
 body {
-  background-color: #ffde00;
+  text-align: center;
+  font-family: 'PT Sans', sans-serif;
+  background-image: url(../img/scar.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 button {
   padding: 5px;
   margin: 5px;
   cursor: pointer;
+}
+
+.cute {
+  font-family: 'Cute Font', cursive;
+}
+
+.ravenclaw {
+  color: #000a90;
 }
 
 .no-highlight {
@@ -56,8 +81,20 @@ button {
 }
 
 .centered {
-  width: 800px;
+  width: 256px;
   margin: 0 auto;
+  text-align: center;
+}
+
+.footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  padding: 5pt 0;
+}
+
+#wrapper {
+  margin-top: 20pt;
 }
 
 #renderCanvas {

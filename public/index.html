@@ -5,12 +5,25 @@
   <title>Spellcast</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/img/wand.png" />
+  <link href="https://fonts.googleapis.com/css?family=Cute+Font|PT+Sans" rel="stylesheet">
   <link type="text/css" rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
-  <p id="info">Connect your wand.</p>
-  <div class="centered" id="qrcode"></div>
-  <canvas id="renderCanvas"></canvas>
+  <h1 class="ravenclaw cute" style="margin-top: -10pt">spellcast</h1>
+  <h3 style="margin-top: -10pt">a virtual spellcasting demo</h3>
+  <hr style="width: 70%; margin: 10pt auto 0 auto">
+  <div id="wrapper">
+    <div class="centered" id="qrcode"></div>
+    <p style="margin-top: 10pt">
+      <b>Connect your wand:</b> scan the QR code from your phone.<br>
+      <b>Cast spells:</b> wave your wand and say a few funny words.
+    </p>
+    <canvas id="renderCanvas" style="display: none"></canvas>
+    <p id="info"></p>
+  </div>
+  <div class="footer"><p style="margin-right: 10pt; margin-bottom: 5pt">
+    by <a href="https://github.com/ohjay/spellcast">ohjay</a>
+  </p></div>
 
   <!-- Scripts -->
   <script src="/socket.io/socket.io.js"></script>
