@@ -188,6 +188,8 @@ function nox() {
 }
 
 function launch() {
+  $('#qrcode').css('display', 'none');
+  $('#instructions').css('display', 'none');
   $('#renderCanvas').css('display', 'inline');
   loadScene();
   speechRec = new JsSpeechRecognizer();
