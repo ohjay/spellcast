@@ -284,5 +284,6 @@ $(function() {
     loadScene();
     speechRec = new JsSpeechRecognizer();
     speechRec.openMic();
+    speechRec.loadModel('speech/model.json')
   };
 });

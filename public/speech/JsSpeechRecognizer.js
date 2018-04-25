@@ -304,12 +304,7 @@ JsSpeechRecognizer.prototype.generateModel = function() {
  */
 JsSpeechRecognizer.prototype.saveModel = function(modelPath) {
     var modelJson = JSON.stringify(this.model);
-    var fs = require('fs');
-    fs.writeFile(modelPath, modelJson, function(err) {
-        if (err) {
-            console.log(err);
-        }
-    });
+    console.log(modelJson);
 };
 
 /**
@@ -317,8 +312,10 @@ JsSpeechRecognizer.prototype.saveModel = function(modelPath) {
  * @public
  */
 JsSpeechRecognizer.prototype.loadModel = function(modelPath) {
-    $.getJSON(modelPath, function(modelJson) {
-        this.model = modelJson
+    var speechRec = this;
+    $.getJSON(modelPath, function(model) {
+        speechRec.model = model;
+        console.log('[+] Loaded model.')
     });
 };
 
