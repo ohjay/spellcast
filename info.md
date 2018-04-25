@@ -30,3 +30,7 @@ his/her wand moving around, along with the effect of the spell that he/she casts
 - I don't intend to put much work into the scene,
   meaning it could be greatly improved by the careful touch of an artist.
   To my extreme regret, the label of "artist" cannot in general be applied to me.
+
+I had planned to involve accelerometer data in order to track the position
+of the wand as well as the orientation, but after multiple numerical integration
+attempts I found that the scheme introduced too much error/drift to be usable.

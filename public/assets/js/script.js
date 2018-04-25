@@ -27,13 +27,6 @@ var targetRotX = 0;
 var targetRotY = 0;
 var targetRotZ = 0;
 
-var vx = 0;
-var vy = 0;
-var vz = 0;
-var dt = 1; // s
-
-const _DIST_SCALE = 1e6;
-
 // --------------------
 
 function logInfo(msg) {
@@ -200,34 +193,13 @@ $(function() {
     socket.emit('gamma', gamma);
   }
 
-  function handleMotion(evt) {
-    let acceleration = evt.acceleration; // contains accel.x, accel.y, accel.z (m/s^2)
-    if (acceleration.x == null) {
-      acceleration = evt.accelerationIncludingGravity;
-      if (acceleration.z != null) {
-        acceleration.z -= 9.81;
-      }
-    }
-    let rotationRate = evt.rotationRate; // rotation rate around each axis (deg/s)
-    let interval = evt.interval; // ms time interval at which data is obtained from device
-    // Send over socket
-    socket.emit('interval', interval);
-    socket.emit('acceleration', acceleration);
-  }
-
   document.getElementById('wand').onclick = function() {
-    // Listen to orientation and motion events
+    // Listen to orientation events
     if (window.DeviceOrientationEvent) {
       window.addEventListener('deviceorientation', handleOrientation, false);
       logInfo('Device orientation supported!');
     } else {
       logInfo('Error: device orientation not supported!');
-    }
-    if (window.DeviceMotionEvent) {
-      window.addEventListener('devicemotion', handleMotion);
-      logInfo('Device motion supported!');
-    } else {
-      logInfo('Error: device motion not supported!');
     }
   };
 
@@ -280,45 +252,6 @@ $(function() {
       wand.rotation.z = targetRotZ + (gamma - baseGamma);
     }
     prevGamma = gamma;
-  });
-  socket.on('interval', function(interval) {
-    // Log interval for use in numerical integration methods
-    dt = interval / 1000.0; // dt in seconds
-  });
-  socket.on('acceleration', function(acceleration) {
-    if (acceleration.x != null) {
-      if (wand != null) {
-        // let vxH = vx + 0.5 * acceleration.x * dt;
-        // let dx  = (vxH * dt) * _DIST_SCALE;
-        // vx = vxH + 0.5 * acceleration.x * dt;
-        vx += acceleration.x * dt;
-        let dx = (vx * dt) * _DIST_SCALE;
-        document.getElementById('paccelx').textContent = 'translate x: ' + dx.toString() + ' (' + acceleration.x.toString() + ')';
-        wand.translate(BABYLON.Axis.X, dx, BABYLON.Space.WORLD);
-      }
-    }
-    if (acceleration.y != null) {
-      if (wand != null) {
-        // let vzH = vz + 0.5 * acceleration.y * dt;
-        // let dz  = (vzH * dt) * _DIST_SCALE;
-        // vz = vzH + 0.5 * acceleration.y * dt;
-        vz += acceleration.y * dt;
-        let dz = (vz * dt) * _DIST_SCALE;
-        document.getElementById('paccely').textContent = 'translate z: ' + dz.toString() + ' (' + acceleration.y.toString() + ')';
-        wand.translate(BABYLON.Axis.Z, dz, BABYLON.Space.WORLD);
-      }
-    }
-    if (acceleration.z != null) {
-      if (wand != null) {
-        // let vyH = vy + 0.5 * acceleration.z * dt;
-        // let dy  = (vyH * dt) * _DIST_SCALE;
-        // vy = vyH + 0.5 * acceleration.z * dt;
-        vy += acceleration.z * dt;
-        let dy = (vy * dt) * _DIST_SCALE;
-        document.getElementById('paccelz').textContent = 'translate y: ' + dy.toString() + ' (' + acceleration.z.toString() + ')';
-        wand.translate(BABYLON.Axis.Y, dy, BABYLON.Space.WORLD);
-      }
-    }
   });
   socket.on('calibrate', function() {
     // The phone is currently pointed at the screen
