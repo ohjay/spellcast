@@ -131,16 +131,19 @@ function wingardiumLeviosa() {
   if (!wlActive) {
     // Highlight target object
     hl.addMesh(sphere, BABYLON.Color3.Green());
-    wlBasePos = lightSphere.getAbsolutePosition();
+    wlBasePos = lightSphere.getAbsolutePosition().clone();
 
     // Update target position at interval
     let updateId = setInterval(function() {
       // Translate object according to difference in wand target
-      let currPos = lightSphere.getAbsolutePosition();
-      let delta   = currPos - wlBasePos;
-      sphere.translate(BABYLON.Axis.X, delta.x, BABYLON.Space.WORLD);
-      sphere.translate(BABYLON.Axis.Y, delta.y, BABYLON.Space.WORLD);
-      sphere.translate(BABYLON.Axis.Z, delta.z, BABYLON.Space.WORLD);
+      let currPos = lightSphere.getAbsolutePosition().clone();
+      let dx = currPos.x - wlBasePos.x;
+      let dy = currPos.y - wlBasePos.y;
+      let dz = currPos.z - wlBasePos.z;
+      document.getElementById('info').textContent = dx.toString() + ', ' + dy.toString() + ', ' + dz.toString();
+      sphere.translate(BABYLON.Axis.X, dx, BABYLON.Space.WORLD);
+      sphere.translate(BABYLON.Axis.Y, dy, BABYLON.Space.WORLD);
+      sphere.translate(BABYLON.Axis.Z, dz, BABYLON.Space.WORLD);
     }, 100); // ms
 
     // Set timeout for effect expiration
