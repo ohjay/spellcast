@@ -40,6 +40,25 @@ function toRadians(angle) {
   return angle * (Math.PI / 180);
 }
 
+function uuidv4() {
+  // Source: https://stackoverflow.com/a/2117523
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+function getParameterByName(name, url) {
+  // Source: https://stackoverflow.com/a/901144
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 function loadScene() {
   let canvas = document.getElementById('renderCanvas');
   let engine = new BABYLON.Engine(canvas, true);
@@ -178,7 +197,12 @@ $(function() {
   let socket = io();
   
   // Join a channel
-  let room = 'test';
+  let room = getParameterByName('room');
+  if (room == null) {
+    room = uuidv4();
+    let targetURL = 'https://spelkast.herokuapp.com/wand?room=' + room;
+    new QRCode(document.getElementById('qrcode'), targetURL);
+  }
   socket.emit('join', room);
 
   /*
@@ -262,7 +286,7 @@ $(function() {
     baseGamma = prevGamma;
   });
   socket.on('recordstart', function() {
-    if (!speechRec.isRecording()) {
+    if (!wlActive && !speechRec.isRecording()) {
       speechRec.startRecognitionRecording();
     }
   });

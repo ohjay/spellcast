@@ -6,7 +6,9 @@ const path = require('path');
 // Configuration
 const port = process.env.PORT || 3000;
 const app = express();
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public', {
+  extensions: ['html', 'htm']
+}));
 
 // Start server
 const server = app.listen(port, () => console.log('Listening on localhost:' + port));
