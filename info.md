@@ -21,6 +21,10 @@ his/her wand moving around, along with the effect of the spell that he/she casts
 ## Supported Browsers
 - Chrome
 
+## URLs
+- [http://www.wingardium.xyz](http://www.wingardium.xyz)
+- [https://spelkast.herokuapp.com](https://spelkast.herokuapp.com)
+
 ## Notes
 - You cannot move your feet in-world.
 - I don't intend to put much work into the scene,

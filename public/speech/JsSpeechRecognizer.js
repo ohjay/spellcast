@@ -249,7 +249,7 @@ JsSpeechRecognizer.prototype.generateModel = function() {
         }
     }
 
-    // If we are only using the trained entries, no need to anything else
+    // If we are only using the trained entries, no need to do anything else
     if (this.useRecognitionModel === this.RecognitionModel.TRAINED) {
         return;
     }
@@ -296,9 +296,31 @@ JsSpeechRecognizer.prototype.generateModel = function() {
             this.model[key] = this.model[key].concat(averageModel[key]);
         }
     }
-
 };
 
+/**
+ * Saves the speech recognition model.
+ * @public
+ */
+JsSpeechRecognizer.prototype.saveModel = function(modelPath) {
+    var modelJson = JSON.stringify(this.model);
+    var fs = require('fs');
+    fs.writeFile(modelPath, modelJson, function(err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+};
+
+/**
+ * Loads the speech recognition model.
+ * @public
+ */
+JsSpeechRecognizer.prototype.loadModel = function(modelPath) {
+    $.getJSON(modelPath, function(modelJson) {
+        this.model = modelJson
+    });
+};
 
 // Private internal functions
 
@@ -570,7 +592,7 @@ JsSpeechRecognizer.prototype.normalizeInput = function(input) {
  * @param {Array} input
  * @param {Number} numResults
  * @param {Object} speechModel
- * @param {Function} findDistance
+ * @param {Function} findDistanceFunction
  * @return {Array}
  * @private
  */

@@ -233,6 +233,14 @@ $(function() {
     socket.emit('calibrate');
   };
 
+  $('#incantate').on('mousedown', function() {
+    // Begin recording
+    $('#incantate').css('transform', 'scaleX(1.5)');
+  }).on('mouseup', function() {
+    // End recording
+    $('#incantate').css('transform', 'scaleX(1.0)');
+  });
+
   /*
    * RECEIVER
    */

@@ -20,17 +20,32 @@ button {
   border-radius: 50%;
   border: 2px solid #f5f5f5;
   overflow: hidden;
-  background: #464646;
   box-shadow: 0 0 3px gray;
   cursor: pointer;
 }
 
-.round-button:hover {
+.gray {
+  background: #464646;
+}
+
+.gray:hover {
   background: #262626;
 }
 
-.round-button:active {
+.gray:active {
   background: #151515;
+}
+
+.blue {
+  background: #0c41bd;
+}
+
+.blue:hover {
+  background: #093290;
+}
+
+.blue:active {
+  background: #062670;
 }
 
 #renderCanvas {
