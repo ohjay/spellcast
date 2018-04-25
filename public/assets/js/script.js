@@ -28,6 +28,8 @@ var targetRotX = 0;
 var targetRotY = 0;
 var targetRotZ = 0;
 
+const _WL_SCALE = 2;
+
 // --------------------
 
 function logInfo(msg) {
@@ -139,7 +141,7 @@ function wingardiumLeviosa() {
     let updateId = setInterval(function() {
       // Translate object according to difference in wand target
       let currPos = lightSphere.getAbsolutePosition().clone();
-      let delta   = currPos.subtract(wlBasePos);
+      let delta   = currPos.subtract(wlBasePos).scale(_WL_SCALE);
       sphere.position = sphereBasePos.add(delta);
     }, 100); // ms
 
@@ -148,7 +150,7 @@ function wingardiumLeviosa() {
       hl.removeMesh(sphere);
       clearInterval(updateId);
       wlActive = false;
-    }, 20000); // ms
+    }, 10000); // ms
     wlActive = true;
   }
 }
