@@ -11,7 +11,7 @@
 <body>
   <h1 class="ravenclaw cute" style="margin-top: -10pt">spellcast</h1>
   <h3 style="margin-top: -10pt">a virtual spellcasting demo</h3>
-  <hr style="width: 70%; margin: 10pt auto 0 auto">
+  <hr id="line" style="width: 70%; margin: 10pt auto">
   <div id="wrapper">
     <div class="centered" id="qrcode"></div>
     <p id="instructions" style="margin-top: 10pt">
@@ -19,7 +19,9 @@
       <b>Cast spells:</b> wave your wand and say a few funny words.
     </p>
     <canvas id="renderCanvas" style="display: none"></canvas>
-    <p id="info"></p>
+    <div id="info-wrapper" class="marquee">
+      <p id="info" class="console"></p>
+    </div>
   </div>
   <div class="footer"><p style="margin-right: 10pt; margin-bottom: 5pt">
     by <a href="https://github.com/ohjay/spellcast">ohjay</a>

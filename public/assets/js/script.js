@@ -41,7 +41,13 @@ const _WL_SCALE = 2;
 // --------------------
 
 function logInfo(msg) {
-  document.getElementById('info').textContent += msg + ' ';
+  document.getElementById('info').textContent += '[' + datestring() + '] ' + msg + '  ';
+  $('#info-wrapper').removeClass('marquee').addClass('marquee');
+}
+
+function datestring() {
+  let currTime = new Date().toLocaleTimeString();
+  return currTime.slice(0, -3);
 }
 
 function toRadians(angle) {
@@ -138,6 +144,7 @@ function loadScene() {
     return scene;
   };
   let scene = createScene();
+  engine.setSize($(window).width(), Math.round($(window).height() * 0.77));
   engine.runRenderLoop(function() {
     scene.render();
   });
@@ -191,6 +198,7 @@ function launch() {
   $('#qrcode').css('display', 'none');
   $('#instructions').css('display', 'none');
   $('#renderCanvas').css('display', 'inline');
+  $('#line').css('display', 'none');
   loadScene();
   speechRec = new JsSpeechRecognizer();
   speechRec.openMic();
@@ -262,5 +270,7 @@ $(function() {
   });
   socket.on('connected', function() {
     launch();
+    logInfo('Wand connected. ' +
+      'To cast a spell, hold down the Incantation button on your phone and say the magic word(s).');
   });
 });
