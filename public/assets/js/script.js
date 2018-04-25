@@ -275,6 +275,7 @@ $(function() {
   socket.on('connected', function() {
     launch();
     logInfo('Wand connected. ' +
-      'To cast a spell, hold down the Incantation button on your phone and say the magic word(s).');
+      'To calibrate, point your wand at the screen and hit Calibrate on your phone. ' +
+      'To cast a spell, hold down the Incantation button and say the magic word(s).');
   });
 });

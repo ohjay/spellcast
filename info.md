@@ -8,10 +8,22 @@ his/her phone in front of a computer while calling out an incantation and
 brandishing the phone "wand." On-screen the user would then be able to see
 his/her wand moving around, along with the effect of the spell that he/she casts.
 
+## Instructions
+1. Open the website in a desktop/laptop browser.
+2. Use your phone to scan the provided QR code.
+3. Point your phone at the screen and hit Calibrate.
+   - At this point, you should be able to see your real-world movements reflected in the scene.
+4. **To cast a spell:** hold down the Incantate button, call out the spell, and release the button.
+   - Supported spells are listed below.
+   - For bonus points, provide the correct wand movement as well.
+
 ## Spell List
 - Wingardium Leviosa
+  - Levitates objects.
 - Lumos
+  - Creates a beam of light that shines from the wand's tip.
 - Nox
+  - Extinguishes light from Lumos.
 
 ## Technologies
 - WebSockets
