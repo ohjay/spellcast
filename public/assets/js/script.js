@@ -3,34 +3,34 @@
  * --------------------
  */
 
-let wand        = null;
-let wandRoot    = null;
-let wandLight   = null;
-let lightSphere = null;
-let hl          = null;
-let sphere      = null;
+var wand        = null;
+var wandRoot    = null;
+var wandLight   = null;
+var lightSphere = null;
+var hl          = null;
+var sphere      = null;
 
-let lightOn   = false;
-let wlActive  = false;
-let wlBasePos = null;
-let speechRec = null;
+var lightOn   = false;
+var wlActive  = false;
+var wlBasePos = null;
+var speechRec = null;
 
-let prevAlpha = 0;
-let prevBeta  = 0;
-let prevGamma = 0;
+var prevAlpha = 0;
+var prevBeta  = 0;
+var prevGamma = 0;
 
-let baseAlpha = 0;
-let baseBeta  = 0;
-let baseGamma = 0;
+var baseAlpha = 0;
+var baseBeta  = 0;
+var baseGamma = 0;
 
-let targetRotX = 0;
-let targetRotY = 0;
-let targetRotZ = 0;
+var targetRotX = 0;
+var targetRotY = 0;
+var targetRotZ = 0;
 
-let vx = 0;
-let vy = 0;
-let vz = 0;
-let dt = 1; // s
+var vx = 0;
+var vy = 0;
+var vz = 0;
+var dt = 1; // s
 
 // --------------------
 
