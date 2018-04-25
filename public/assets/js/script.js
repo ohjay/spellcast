@@ -32,7 +32,7 @@ var vy = 0;
 var vz = 0;
 var dt = 1; // s
 
-const _DIST_SCALE = 1e8;
+const _DIST_SCALE = 1e3;
 
 // --------------------
 
@@ -283,33 +283,38 @@ $(function() {
   });
   socket.on('interval', function(interval) {
     // Log interval for use in numerical integration methods
-    dt = interval / 1000.0;
+    dt = interval / 1000.0; // dt in seconds
   });
   socket.on('acceleration', function(acceleration) {
     if (acceleration.x != null) {
       if (wand != null) {
-        // Velocity Verlet
-        let vxH = vx + 0.5 * acceleration.x * dt;
-        let dx  = (vxH * dt) * _DIST_SCALE;
-        vx = vxH + 0.5 * acceleration.x * dt;
+        // let vxH = vx + 0.5 * acceleration.x * dt;
+        // let dx  = (vxH * dt) * _DIST_SCALE;
+        // vx = vxH + 0.5 * acceleration.x * dt;
+        vx += acceleration.x * dt;
+        let dx = (vx * dt) * _DIST_SCALE;
         document.getElementById('paccelx').textContent = 'translate x: ' + dx.toString() + ' (' + acceleration.x.toString() + ')';
         wand.translate(BABYLON.Axis.X, dx, BABYLON.Space.WORLD);
       }
     }
     if (acceleration.y != null) {
       if (wand != null) {
-        let vzH = vz + 0.5 * acceleration.y * dt;
-        let dz  = (vzH * dt) * _DIST_SCALE;
-        vz = vzH + 0.5 * acceleration.y * dt;
+        // let vzH = vz + 0.5 * acceleration.y * dt;
+        // let dz  = (vzH * dt) * _DIST_SCALE;
+        // vz = vzH + 0.5 * acceleration.y * dt;
+        vz += acceleration.y * dt;
+        let dz = (vz * dt) * _DIST_SCALE;
         document.getElementById('paccely').textContent = 'translate z: ' + dz.toString() + ' (' + acceleration.y.toString() + ')';
         wand.translate(BABYLON.Axis.Z, dz, BABYLON.Space.WORLD);
       }
     }
     if (acceleration.z != null) {
       if (wand != null) {
-        let vyH = vy + 0.5 * acceleration.z * dt;
-        let dy  = (vyH * dt) * _DIST_SCALE;
-        vy = vyH + 0.5 * acceleration.z * dt;
+        // let vyH = vy + 0.5 * acceleration.z * dt;
+        // let dy  = (vyH * dt) * _DIST_SCALE;
+        // vy = vyH + 0.5 * acceleration.z * dt;
+        vy += acceleration.z * dt;
+        let dy = (vy * dt) * _DIST_SCALE;
         document.getElementById('paccelz').textContent = 'translate y: ' + dy.toString() + ' (' + acceleration.z.toString() + ')';
         wand.translate(BABYLON.Axis.Y, dy, BABYLON.Space.WORLD);
       }
