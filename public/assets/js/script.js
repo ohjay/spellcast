@@ -41,8 +41,12 @@ const _WL_SCALE = 2;
 // --------------------
 
 function logInfo(msg) {
-  document.getElementById('info').textContent += '[' + datestring() + '] ' + msg + '  ';
-  $('#info-wrapper').removeClass('marquee').addClass('marquee');
+  document.getElementById('info').textContent = '[' + datestring() + '] ' + msg;
+
+  // Restart marquee animation
+  let infoWrapper = document.getElementById('info-wrapper');
+  let newInfoWrapper = infoWrapper.cloneNode(true);
+  infoWrapper.parentNode.replaceChild(newInfoWrapper, infoWrapper);
 }
 
 function datestring() {
