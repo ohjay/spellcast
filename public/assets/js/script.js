@@ -233,10 +233,10 @@ $(function() {
     socket.emit('calibrate');
   };
 
-  $('#incantate').on('mousedown', function() {
+  $('#incantate').on('touchstart', function() {
     // Begin recording
     $('#incantate').css('transform', 'scaleX(1.5)');
-  }).on('mouseup', function() {
+  }).on('touchend', function() {
     // End recording
     $('#incantate').css('transform', 'scaleX(1.0)');
   });
