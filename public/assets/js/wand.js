@@ -55,14 +55,14 @@ $(function() {
     socket.emit('recordstart');
 
     $('#incantate').css({
-      'transform': 'scale(1.2)', 'background': '#cd0000'
+      'background': '#cd0000'
     }); // (button indication)
   }).on('touchend', function() {
     // Send signal to end recording
     socket.emit('recordend');
 
     $('#incantate').css({
-      'transform': 'scale(1.0)', 'background': ''
+      'background': ''
     }); // (button indication)
   });
 
