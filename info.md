@@ -11,19 +11,19 @@ his/her wand moving around, along with the effect of the spell that he/she casts
 ## Instructions
 1. Open the website in a desktop/laptop browser.
 2. Use your phone to scan the provided QR code.
-3. Point your phone at the screen and hit Calibrate.
+3. Point your phone at the screen and hit _Calibrate_.
    - At this point, you should be able to see your real-world movements reflected in the scene.
-4. **To cast a spell:** hold down the Incantate button, call out the spell, and release the button.
+4. **To cast a spell:** hold down the _Incantate_ button, call out the spell, and release the button.
    - Supported spells are listed below.
    - For bonus points, provide the correct wand movement as well.
 
 ## Spell List
 - Wingardium Leviosa
-  - Levitates objects.
+  - _Levitates objects._
 - Lumos
-  - Creates a beam of light that shines from the wand's tip.
+  - _Creates a beam of light that shines from the wand's tip._
 - Nox
-  - Extinguishes light from Lumos.
+  - _Extinguishes light from Lumos._
 
 ## Technologies
 - WebSockets
