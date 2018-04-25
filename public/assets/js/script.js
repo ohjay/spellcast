@@ -32,7 +32,7 @@ var vy = 0;
 var vz = 0;
 var dt = 1; // s
 
-const _DIST_SCALE = 1e3;
+const _DIST_SCALE = 1e6;
 
 // --------------------
 
