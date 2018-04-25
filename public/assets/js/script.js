@@ -13,6 +13,7 @@ let sphere      = null;
 let lightOn   = false;
 let wlActive  = false;
 let wlBasePos = null;
+let speechRec = null;
 
 let prevAlpha = 0;
 let prevBeta  = 0;
@@ -234,11 +235,23 @@ $(function() {
   };
 
   $('#incantate').on('touchstart', function() {
-    // Begin recording
-    $('#incantate').css('transform', 'scaleX(1.5)');
+    // Send signal to start recording
+    socket.emit('recordstart');
+
+    // (Button indication)
+    $('#incantate').css({
+      'transform': 'scale(1.2)',
+      'background': '#cd0000'
+    });
   }).on('touchend', function() {
-    // End recording
-    $('#incantate').css('transform', 'scaleX(1.0)');
+    // Send signal to end recording
+    socket.emit('recordend');
+
+    // (Button indication)
+    $('#incantate').css({
+      'transform': 'scale(1.0)',
+      'background': ''
+    });
   });
 
   /*
@@ -306,8 +319,28 @@ $(function() {
     baseBeta  = prevBeta;
     baseGamma = prevGamma;
   });
+  socket.on('recordstart', function() {
+    if (!speechRec.isRecording()) {
+      speechRec.startRecognitionRecording();
+    }
+  });
+  socket.on('recordend', function() {
+    if (speechRec.isRecording()) {
+      speechRec.stopRecording();
+      let spell = speechRec.getTopRecognitionHypotheses(1)[0].match;
+      if (spell === 'wingardium') {
+        wingardiumLeviosa(); // perform "Wingardium Leviosa"
+      } else if (spell === 'lumos') {
+        lumos(); // perform "Lumos"
+      } else {
+        nox(); // perform "Nox"
+      }
+    }
+  });
 
   document.getElementById('scene').onclick = function() {
     loadScene();
+    speechRec = new JsSpeechRecognizer();
+    speechRec.openMic();
   };
 });

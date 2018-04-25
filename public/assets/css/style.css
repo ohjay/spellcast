@@ -55,10 +55,6 @@ button {
   background: #093290;
 }
 
-.blue:active {
-  background: #062670;
-}
-
 #renderCanvas {
   width: 100%;
   height: 100%;
