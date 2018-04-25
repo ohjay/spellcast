@@ -32,6 +32,8 @@ var vy = 0;
 var vz = 0;
 var dt = 1; // s
 
+const _DIST_SCALE = 10;
+
 // --------------------
 
 function logInfo(msg) {
@@ -285,30 +287,30 @@ $(function() {
   });
   socket.on('acceleration', function(acceleration) {
     if (acceleration.x != null) {
-      document.getElementById('paccelx').textContent = 'acceleration x: ' + acceleration.x.toString();
       if (wand != null) {
         // Velocity Verlet
         let vxH = vx + 0.5 * acceleration.x * dt;
-        let dx  = vxH * dt;
+        let dx  = (vxH * dt) * _DIST_SCALE;
         vx = vxH + 0.5 * acceleration.x * dt;
+        document.getElementById('paccelx').textContent = 'translate x: ' + dx.toString();
         wand.translate(BABYLON.Axis.X, dx, BABYLON.Space.WORLD);
       }
     }
     if (acceleration.y != null) {
-      document.getElementById('paccely').textContent = 'acceleration y: ' + acceleration.y.toString();
       if (wand != null) {
         let vzH = vz + 0.5 * acceleration.y * dt;
-        let dz  = vzH * dt;
+        let dz  = (vzH * dt) * _DIST_SCALE;
         vz = vzH + 0.5 * acceleration.y * dt;
+        document.getElementById('paccely').textContent = 'translate y: ' + dy.toString();
         wand.translate(BABYLON.Axis.Z, dz, BABYLON.Space.WORLD);
       }
     }
     if (acceleration.z != null) {
-      document.getElementById('paccelz').textContent = 'acceleration z: ' + acceleration.z.toString();
       if (wand != null) {
         let vyH = vy + 0.5 * acceleration.z * dt;
-        let dy  = vyH * dt;
+        let dy  = (vyH * dt) * _DIST_SCALE;
         vy = vyH + 0.5 * acceleration.z * dt;
+        document.getElementById('paccelz').textContent = 'translate z: ' + dz.toString();
         wand.translate(BABYLON.Axis.Y, dy, BABYLON.Space.WORLD);
       }
     }
