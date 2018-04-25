@@ -228,6 +228,10 @@ $(function() {
     });
   });
 
+  document.getElementById('debug').onclick = function() {
+    socket.emit('debug');
+  };
+
   /*
    * RECEIVER
    */
@@ -276,6 +280,9 @@ $(function() {
         nox(); // perform "Nox"
       }
     }
+  });
+  socket.on('debug', function() {
+    wingardiumLeviosa();
   });
 
   document.getElementById('scene').onclick = function() {
