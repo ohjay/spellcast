@@ -15,7 +15,7 @@ his/her wand moving around, along with the effect of the spell that he/she casts
    - At this point, you should be able to see your real-world movements reflected in the scene.
 4. **To cast a spell:** hold down the _Incantate_ button, call out the spell, and release the button.
    - Supported spells are listed below.
-   - For bonus points, provide the correct wand movement as well.
+   - For bonus points, provide the correct wand motion as well.
 
 ## Spell List
 - Wingardium Leviosa
