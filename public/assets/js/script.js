@@ -284,7 +284,7 @@ $(function() {
     }
   });
   socket.on('debug', function() {
-    wingardiumLeviosa();
+    lumos();
   });
 
   document.getElementById('scene').onclick = function() {
