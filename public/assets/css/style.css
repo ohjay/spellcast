@@ -50,7 +50,7 @@ button {
 }
 
 .round-button {
-  width: 10%;
+  width: 50%;
   height: 0;
   padding-bottom: 10%;
   border-radius: 50%;
@@ -58,6 +58,7 @@ button {
   overflow: hidden;
   box-shadow: 0 0 3px gray;
   cursor: pointer;
+  margin-top: 10pt;
 }
 
 .gray {
@@ -97,8 +98,14 @@ button {
   margin-top: 20pt;
 }
 
+#wand-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #renderCanvas {
   width: 100%;
-  height: 80%;
+  height: 70%;
   touch-action: none;
 }
