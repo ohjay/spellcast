@@ -18,7 +18,7 @@ const io = socketIO(server);
 io.on('connection', function(socket) {
   socket.on('join', function(room) {
     socket.join(room);
-    let keys = ['alpha', 'beta', 'gamma', 'calibrate', 'recordstart', 'recordend'];
+    let keys = ['alpha', 'beta', 'gamma', 'calibrate', 'recordstart', 'recordend', 'connected'];
     let numKeys = keys.length;
     for (let i = 0; i < numKeys; ++i) {
       !function(k) {

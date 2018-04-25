@@ -77,4 +77,5 @@ $(function() {
   } else {
     logInfo('Error: device orientation not supported!');
   }
+  socket.emit('connected');
 });

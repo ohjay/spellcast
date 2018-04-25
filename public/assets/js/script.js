@@ -187,6 +187,13 @@ function nox() {
   }
 }
 
+function launch() {
+  loadScene();
+  speechRec = new JsSpeechRecognizer();
+  speechRec.openMic();
+  speechRec.loadModel('speech/model.json')
+}
+
 // --------------------
 
 $(function() {
@@ -248,13 +255,7 @@ $(function() {
       }
     }
   });
-
-  /*
-   * SCENE SETUP - MAIN
-   */
-
-  loadScene();
-  speechRec = new JsSpeechRecognizer();
-  speechRec.openMic();
-  speechRec.loadModel('speech/model.json')
+  socket.on('connected', function() {
+    launch();
+  });
 });
