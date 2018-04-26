@@ -172,6 +172,10 @@ div.rect-button span {
   100% { transform: translate(-100%, 0); }
 }
 
+#qrcode {
+  height: 256px;
+}
+
 #wrapper {
   margin-top: 10pt;
 }

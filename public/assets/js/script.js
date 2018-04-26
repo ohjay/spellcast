@@ -221,6 +221,8 @@ $(function() {
   new QRCode(document.getElementById('qrcode'), {
     text: targetURL, width: 256, height: 256
   });
+  $('#instructions-placeholder').css('display', 'none');
+  $('#instructions').css('display', 'block');
   socket.emit('join', room);
 
   /*

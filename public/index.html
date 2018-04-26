@@ -14,9 +14,12 @@
   <hr id="line" style="width: 70%; margin: 10pt auto">
   <div id="wrapper">
     <div class="centered" id="qrcode"></div>
-    <p id="instructions" style="margin-top: 10pt">
+    <p id="instructions" style="margin-top: 10pt; display: none">
       <b>Connect your wand:</b> scan the QR code from your phone.<br>
       <b>Cast spells:</b> wave your wand and say a few funny words.
+    </p>
+    <p id="instructions-placeholder" style="margin-top: 10pt">
+      <em>Generating QR code...</em>
     </p>
     <canvas id="renderCanvas" style="display: none"></canvas>
     <div id="info-wrapper" class="marquee">
