@@ -34,7 +34,7 @@ his/her wand moving around, along with the effect of the spell that he/she casts
 - Chrome
 
 ## URLs
-- [http://www.wingardium.xyz](http://www.wingardium.xyz)
+- ~~[http://www.wingardium.xyz](http://www.wingardium.xyz)~~
 - [https://spelkast.herokuapp.com](https://spelkast.herokuapp.com)
 
 ## Notes

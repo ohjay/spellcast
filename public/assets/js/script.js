@@ -88,8 +88,8 @@ function loadScene() {
     // Create a built-in "sphere" shape
     sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {segments: 16, diameter: 1}, scene);
     let sphereMaterial = new BABYLON.StandardMaterial('sphereMaterial', scene);
-    sphereMaterial.diffuseColor  = new BABYLON.Color3(1.0, 0.7, 0.0);
-    sphereMaterial.ambientColor  = new BABYLON.Color3(1.0, 0.7, 0.0);
+    sphereMaterial.diffuseColor = new BABYLON.Color3(1.0, 0.7, 0.0);
+    sphereMaterial.ambientColor = new BABYLON.Color3(1.0, 0.7, 0.0);
     sphere.material = sphereMaterial;
 
     // Move the sphere upward 1/2 of its height
@@ -98,8 +98,8 @@ function loadScene() {
     // Create a built-in "ground" shape
     let ground = BABYLON.MeshBuilder.CreateGround('ground', {height: 6, width: 6, subdivisions: 2}, scene);
     let groundMaterial = new BABYLON.StandardMaterial('groundMaterial', scene);
-    groundMaterial.diffuseColor  = new BABYLON.Color3(0.82, 0.82, 0.82);
-    groundMaterial.ambientColor  = new BABYLON.Color3(0.82, 0.82, 0.82);
+    groundMaterial.diffuseColor = new BABYLON.Color3(0.82, 0.82, 0.82);
+    groundMaterial.ambientColor = new BABYLON.Color3(0.82, 0.82, 0.82);
     ground.material = groundMaterial;
 
     // Shadows
