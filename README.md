@@ -15,6 +15,7 @@ his/her wand moving around, along with the effect of the spell that he/she casts
 
 ## Instructions
 1. Open the website in a desktop/laptop browser.
+   - **Click on the page a few times.**
 2. Use your phone to scan the provided QR code.
 3. Point your phone at the screen and hit _Calibrate_.
    - At this point, you should be able to see your real-world movements reflected in the scene.
@@ -44,8 +45,7 @@ his/her wand moving around, along with the effect of the spell that he/she casts
 ## Notes
 - You cannot move your feet in-world.
 - I don't intend to put much work into the scene,
-  meaning it could be greatly improved by the careful touch of an artist.
-  To my extreme regret, the label of "artist" cannot in general be applied to me.
+  meaning it could be greatly improved by the touch of an artist.
 - I had planned to involve accelerometer data in order to track the position
   of the wand as well as the orientation, but after multiple numerical integration
   attempts I found that the scheme introduced too much error/drift to be usable.
