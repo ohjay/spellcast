@@ -1,6 +1,8 @@
 # `spellcast`
 Final project for English 198 - The Wizarding World of Harry Potter.
 
+![Screenshot.](https://i.imgur.com/h8rqVpC.png)
+
 ## Premise
 > You're a wizard, Harry.
 
